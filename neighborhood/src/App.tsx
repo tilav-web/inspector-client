@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layouts/root-layout";
 import Main from "./pages/main/main";
 import Auth from "./pages/auth/auth";
+import Regions from "./pages/regions/regions";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Main />,
+      },
+      {
+        path: "/super/regions",
+        element: <Regions />,
       },
     ],
   },
