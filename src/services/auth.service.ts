@@ -57,6 +57,16 @@ class AuthService {
       throw error;
     }
   }
+
+  async logout() {
+    try {
+      const res = await privateInstance.post(ENDPOINTS.AUTH.LOGOUT);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
 
 export const authService = new AuthService();

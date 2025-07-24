@@ -10,7 +10,6 @@ export default function Launch() {
     (async () => {
       try {
         const inspector = await inspectorService.findMe();
-        console.log(inspector);
         setInspector(inspector);
       } catch (error) {
         console.error(error);

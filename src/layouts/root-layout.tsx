@@ -7,7 +7,7 @@ import PrivateRoute from "@/private/route.private";
 
 export default function RootLayout() {
   return (
-    <>
+    <div className="w-screen h-screen overflow-hidden">
       <PrivateRoute
         roles={[
           "super_admin",
@@ -17,15 +17,17 @@ export default function RootLayout() {
           "province_inspector",
         ]}
       >
-        <AppSidebar />
-        <SidebarInset>
-          <Header />
-          <main className="h-screen overflow-auto">
-            <Outlet />
-          </main>
-        </SidebarInset>
+        <div className="flex h-screen">
+          <AppSidebar />
+          <SidebarInset className="flex-1 overflow-auto">
+            <Header />
+            <main className="pt-24">
+              <Outlet />
+            </main>
+          </SidebarInset>
+        </div>
       </PrivateRoute>
       <Launch />
-    </>
+    </div>
   );
 }

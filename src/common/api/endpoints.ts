@@ -16,4 +16,8 @@ export const ENDPOINTS = {
     DELETE: (id: string) => `/inspector/${id}`,
     ME: "/inspector/me",
   },
+  REGIONS: {
+    BASE: "/regions",
+    INSPECTORS: "/regions/inspectors",
+  },
 };
