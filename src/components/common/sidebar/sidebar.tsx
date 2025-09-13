@@ -13,6 +13,8 @@ import {
   Briefcase,
   X,
   Shield,
+  Network,
+  ClipboardCheck,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -126,9 +128,19 @@ const menuItems = {
     },
     { to: "/profile", icon: <User className="h-5 w-5" />, text: "Profil" },
     {
-      to: "/reports",
+      to: "/neighborhood/reports",
       icon: <BarChart2 className="h-5 w-5" />,
       text: "Hisobotlar",
+    },
+    {
+      to: "/neighborhood/workflows",
+      icon: <Network className="h-5 w-5" />,
+      text: "Ish oqimlarini boshqarish",
+    },
+    {
+      to: "/neighborhood/timetable",
+      icon: <ClipboardCheck className="h-5 w-5" />,
+      text: "Vazifalar jadvali",
     },
     {
       to: "/citizens",

@@ -1,4 +1,6 @@
+
 import type { IInspector } from "../interfaces/inspector.interface";
+import type { ICitizen, IHousehold } from "../interfaces/citizen.interface";
 
 const authId1 = "a1b2c3d4-e5f6-7890-1234-567890abcdef";
 const authId2 = "b2c3d4e5-f6a7-8901-2345-67890abcdef0";
@@ -215,3 +217,95 @@ for (let i = 5; i <= 34; i++) {
     photo: `https://i.pravatar.cc/300?u=neighborhood_inspector_${i}`,
   });
 }
+
+// --- MOCK CITIZENS DATA ---
+
+const employmentStatuses = ["Ishlaydi", "Ishsiz", "Talaba", "Pensioner", "Vaqtincha ishsiz"];
+const maritalStatuses = ["Bo'ydoq", "Uylangan", "Turmushga chiqqan", "Ajrashgan", "Beva"];
+const educationLevels = ["Oliy", "Tugallanmagan oliy", "O'rta maxsus", "O'rta", "Boshlang'ich"];
+const militaryStatuses = ["Xizmat qilgan", "Xizmat qilmagan", "Zaxiradagi ofitser", "Nogironlik sababli ozod"];
+export const regions = ["toshkent_sh", "fargona_vil", "andijon_vil", "namangan_vil", "sirdaryo_vil", "jizzax_vil", "samarqand_vil", "buxoro_vil", "navoiy_vil", "qashqadaryo_vil", "surxondaryo_vil", "xorazm_vil"];
+export const districtsByRegion: { [key: string]: string[] } = {
+  toshkent_sh: ["chilonzor", "yunusobod", "mirobod", "mirzo_ulugbek", "shayxontohur"],
+  fargona_vil: ["margilon", "qoqon", "fergana_sh", "rishton", "bogdod"],
+};
+
+const getRandomItem = (arr: any[]) => arr[Math.floor(Math.random() * arr.length)];
+
+const generateMockCitizens = (): ICitizen[] => {
+  const citizens: ICitizen[] = [];
+  const households: { [key: string]: IHousehold } = {};
+
+  for (let i = 0; i < 30; i++) {
+    const gender = Math.random() > 0.5 ? 'male' : 'female';
+    const region = getRandomItem(regions);
+    const district = getRandomItem(districtsByRegion[region] || ["tuman_1", "tuman_2"]);
+    const neighborhood = `mahalla_${Math.floor(i / 5) + 1}`;
+    const houseNumber = `${Math.floor(Math.random() * 100) + 1}-uy`;
+    const householdId = `${region}-${district}-${neighborhood}-${houseNumber}`;
+
+    const citizen: ICitizen = {
+      id: generateUuid(),
+      first_name: getRandomName('first', gender),
+      last_name: getRandomName('last', gender),
+      middle_name: getRandomName('middle', gender),
+      birthday: getRandomDate(1950, 2005),
+      gender: gender,
+      region: region,
+      district: district,
+      neighborhood: neighborhood,
+      house: houseNumber,
+      pinfl: 30000000000000 + Math.floor(Math.random() * 10000000000000),
+      passport_number: Math.floor(Math.random() * 9000000) + 1000000,
+      passport_series: `${String.fromCharCode(65 + Math.floor(Math.random() * 26))}${String.fromCharCode(65 + Math.floor(Math.random() * 26))}`,
+      nationality: "O'zbek",
+      photo: `https://i.pravatar.cc/300?u=${generateUuid()}`,
+      disability: Math.random() > 0.9,
+      employment_status: getRandomItem(employmentStatuses),
+      marital_status: getRandomItem(maritalStatuses),
+      phone: `+9989${Math.floor(Math.random() * 90000000 + 10000000)}`,
+      education_level: getRandomItem(educationLevels),
+      military_status: gender === 'male' ? getRandomItem(militaryStatuses) : undefined,
+      household: {} as IHousehold // Will be populated later
+    };
+
+    if (!households[householdId]) {
+      const isPrivate = Math.random() > 0.3;
+      households[householdId] = {
+        id: householdId,
+        region: region,
+        district: district,
+        neighborhood: neighborhood,
+        house: houseNumber,
+        private: isPrivate,
+        ownership: isPrivate ? citizen : undefined, // First person in household is owner if private
+        families_count: 1,
+        citizens: [],
+        type: Math.random() > 0.5 ? "yard" : "house",
+        land_area: Math.floor(Math.random() * 500) + 50,
+        details: {
+          "avtomobil": Math.random() > 0.7 ? ["Nexia 3"] : [],
+          "sigir": Math.random() > 0.8 ? [String(Math.floor(Math.random() * 5) + 1)] : [],
+          "qoy": Math.random() > 0.6 ? [String(Math.floor(Math.random() * 20) + 1)] : [],
+        }
+      };
+    }
+
+    households[householdId].citizens.push(citizen);
+    citizen.household = households[householdId];
+    citizens.push(citizen);
+  }
+  
+  // Update families_count and ownership
+  for (const key in households) {
+      const household = households[key];
+      household.families_count = new Set(household.citizens.map(c => c.last_name)).size;
+      if(household.private && !household.ownership) {
+          household.ownership = household.citizens[0];
+      }
+  }
+
+  return citizens;
+};
+
+export const MOCK_CITIZENS: ICitizen[] = generateMockCitizens();

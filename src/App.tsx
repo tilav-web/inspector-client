@@ -7,7 +7,13 @@ import Unauthorized from "./pages/unauthorized/unauthorized";
 import ErrorPage from "./pages/error/error";
 import Inspectors from "./pages/inspectors/inspectors";
 import NeighborhoodDashboard from "./pages/neighborhood/neighborhood.dashboard";
+
+import TimetablePage from "./pages/timetable/timetable";
 import Citizens from "./pages/citizens/citizens";
+import AddEditCitizenPage from "./pages/citizens/add-edit-citizen";
+import CitizenPage from "./pages/citizens/citizen";
+import ReportsPage from "./pages/reports/reports";
+import WorkflowsPage from "./pages/workflows/workflows";
 
 const router = createBrowserRouter([
   {
@@ -39,10 +45,58 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/citizens/*",
+        path: "/neighborhood/reports",
+        element: (
+          <SubLayout roles={["neighborhood"]}>
+            <ReportsPage />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/neighborhood/workflows",
+        element: (
+          <SubLayout roles={["neighborhood"]}>
+            <WorkflowsPage />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/neighborhood/timetable",
+        element: (
+          <SubLayout roles={["state", "region", "district", "neighborhood"]}>
+            <TimetablePage />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/citizens",
         element: (
           <SubLayout roles={["state", "region", "district", "neighborhood"]}>
             <Citizens />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/citizens/add",
+        element: (
+          <SubLayout roles={["state", "region", "district", "neighborhood"]}>
+            <AddEditCitizenPage />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/citizens/edit/:id",
+        element: (
+          <SubLayout roles={["state", "region", "district", "neighborhood"]}>
+            <AddEditCitizenPage />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/citizens/:id",
+        element: (
+          <SubLayout roles={["state", "region", "district", "neighborhood"]}>
+            <CitizenPage />
           </SubLayout>
         ),
       },
