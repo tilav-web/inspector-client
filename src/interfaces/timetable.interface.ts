@@ -1,6 +1,4 @@
-import { IInspector } from './inspector.interface';
-import { ICitizen } from './citizen.interface';
-import { IWorkflowInstance } from './workflow.interface';
+import type { IInspector } from "./inspector.interface";
 
 // Asosiy turlar
 export type TaskStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';

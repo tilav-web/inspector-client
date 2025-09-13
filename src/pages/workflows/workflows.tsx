@@ -72,7 +72,7 @@ const WorkflowCard = ({ instance }: { instance: IWorkflowInstance }) => {
 };
 
 export default function WorkflowsPage() {
-    const [workflows, setWorkflows] = useState<IWorkflowInstance[]>(MOCK_WORKFLOWS);
+    const [workflows] = useState<IWorkflowInstance[]>(MOCK_WORKFLOWS);
 
     return (
         <div className="p-4 md:p-8 min-h-screen">

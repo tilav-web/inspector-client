@@ -1,6 +1,6 @@
-import { IInspector } from './inspector.interface';
-import { ICitizen } from './citizen.interface';
-import { IReport } from './report.interface';
+import { type IInspector } from './inspector.interface';
+import { type ICitizen } from './citizen.interface';
+import { type IReport } from './report.interface';
 
 // Asosiy turlar
 export type WorkflowType = 'TENANT_REGISTRATION' | 'RESOURCE_ALLOCATION' | 'INSPECTOR_OVERSIGHT' | 'DISPUTE_RESOLUTION' | 'GENERAL_REPORTING';

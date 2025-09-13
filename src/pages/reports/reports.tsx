@@ -58,8 +58,8 @@ const ReportCard = ({ report }: { report: IReport }) => (
 );
 
 export default function ReportsPage() {
-    const [reports, setReports] = useState<IReport[]>(MOCK_REPORTS);
-
+    const [reports] = useState<IReport[]>(MOCK_REPORTS);
+    
     return (
         <div className="p-4 md:p-8 min-h-screen">
             <div className="max-w-7xl mx-auto">
