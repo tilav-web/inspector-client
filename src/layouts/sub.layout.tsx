@@ -13,11 +13,11 @@ export default function SubLayout({
   const { inspector } = useInspectorStore();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (inspector?.auth.role && !roles.includes(inspector?.auth.role)) {
-      navigate("/unauthorized");
-    }
-  }, [inspector?.auth.role, navigate]);
+    useEffect(() => {
+      if (inspector?.auth.role && !roles.includes(inspector?.auth.role)) {
+        navigate("/unauthorized");
+      }
+    }, [inspector?.auth.role, navigate]);
 
   return <>{children}</>;
 }

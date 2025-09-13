@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useInspectorStore } from "@/stores/inspector.store";
 import {
   Home,
   User,
@@ -15,41 +16,127 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
-const menuItems = [
-  { to: "/", icon: <Home className="h-5 w-5" />, text: "Bosh sahifa" },
-  { to: "/profile", icon: <User className="h-5 w-5" />, text: "Profil" },
-  {
-    to: "/reports",
-    icon: <BarChart2 className="h-5 w-5" />,
-    text: "Hisobotlar",
-  },
-  {
-    to: "/inspectors",
-    icon: <Shield className="h-5 w-5" />,
-    text: "Inspektorlar",
-  },
-  {
-    to: "/citizens",
-    icon: <Users className="h-5 w-5" />,
-    text: "Fuqorolar",
-  },
-  { to: "/districts", icon: <MapPin className="h-5 w-5" />, text: "Tumanlar" },
-  {
-    to: "/regions",
-    icon: <Building2 className="h-5 w-5" />,
-    text: "Viloyatlar",
-  },
-  {
-    to: "/neighborhoods",
-    icon: <Briefcase className="h-5 w-5" />,
-    text: "Mahallalar",
-  },
-  {
-    to: "/admin",
-    icon: <ShieldCheck className="h-5 w-5" />,
-    text: "Admin Panel",
-  },
-];
+const menuItems = {
+  state: [
+    { to: "/", icon: <Home className="h-5 w-5" />, text: "Bosh sahifa" },
+    { to: "/profile", icon: <User className="h-5 w-5" />, text: "Profil" },
+    {
+      to: "/reports",
+      icon: <BarChart2 className="h-5 w-5" />,
+      text: "Hisobotlar",
+    },
+    {
+      to: "/inspectors",
+      icon: <Shield className="h-5 w-5" />,
+      text: "Inspektorlar",
+    },
+    {
+      to: "/citizens",
+      icon: <Users className="h-5 w-5" />,
+      text: "Fuqorolar",
+    },
+    {
+      to: "/districts",
+      icon: <MapPin className="h-5 w-5" />,
+      text: "Tumanlar",
+    },
+    {
+      to: "/regions",
+      icon: <Building2 className="h-5 w-5" />,
+      text: "Viloyatlar",
+    },
+    {
+      to: "/neighborhoods",
+      icon: <Briefcase className="h-5 w-5" />,
+      text: "Mahallalar",
+    },
+    {
+      to: "/admin",
+      icon: <ShieldCheck className="h-5 w-5" />,
+      text: "Admin Panel",
+    },
+  ],
+  region: [
+    { to: "/region", icon: <Home className="h-5 w-5" />, text: "Bosh sahifa" },
+    { to: "/profile", icon: <User className="h-5 w-5" />, text: "Profil" },
+    {
+      to: "/reports",
+      icon: <BarChart2 className="h-5 w-5" />,
+      text: "Hisobotlar",
+    },
+    {
+      to: "/inspectors",
+      icon: <Shield className="h-5 w-5" />,
+      text: "Inspektorlar",
+    },
+    {
+      to: "/citizens",
+      icon: <Users className="h-5 w-5" />,
+      text: "Fuqorolar",
+    },
+    {
+      to: "/districts",
+      icon: <MapPin className="h-5 w-5" />,
+      text: "Tumanlar",
+    },
+    {
+      to: "/neighborhoods",
+      icon: <Briefcase className="h-5 w-5" />,
+      text: "Mahallalar",
+    },
+    {
+      to: "/admin",
+      icon: <ShieldCheck className="h-5 w-5" />,
+      text: "Admin Panel",
+    },
+  ],
+  district: [
+    {
+      to: "/district",
+      icon: <Home className="h-5 w-5" />,
+      text: "Bosh sahifa",
+    },
+    { to: "/profile", icon: <User className="h-5 w-5" />, text: "Profil" },
+    {
+      to: "/reports",
+      icon: <BarChart2 className="h-5 w-5" />,
+      text: "Hisobotlar",
+    },
+    {
+      to: "/inspectors",
+      icon: <Shield className="h-5 w-5" />,
+      text: "Inspektorlar",
+    },
+    {
+      to: "/citizens",
+      icon: <Users className="h-5 w-5" />,
+      text: "Fuqorolar",
+    },
+    {
+      to: "/neighborhoods",
+      icon: <Briefcase className="h-5 w-5" />,
+      text: "Mahallalar",
+    },
+  ],
+  neighborhood: [
+    {
+      to: "/neighborhood",
+      icon: <Home className="h-5 w-5" />,
+      text: "Bosh sahifa",
+    },
+    { to: "/profile", icon: <User className="h-5 w-5" />, text: "Profil" },
+    {
+      to: "/reports",
+      icon: <BarChart2 className="h-5 w-5" />,
+      text: "Hisobotlar",
+    },
+    {
+      to: "/citizens",
+      icon: <Users className="h-5 w-5" />,
+      text: "Fuqorolar",
+    },
+  ],
+};
 
 interface SidebarProps {
   isOpen: boolean;
@@ -57,6 +144,8 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const { inspector } = useInspectorStore();
+
   return (
     <aside
       className={cn(
@@ -80,22 +169,23 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         </Button>
       </div>
       <nav className="flex-1 px-4 py-6 space-y-2">
-        {menuItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            onClick={onClose} // Close sidebar on navigation for mobile
-            className={({ isActive }) =>
-              cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:bg-primary-foreground/10",
-                isActive && "bg-primary-foreground/20"
-              )
-            }
-          >
-            {item.icon}
-            <span>{item.text}</span>
-          </NavLink>
-        ))}
+        {inspector?.auth.role &&
+          menuItems[inspector?.auth.role].map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              onClick={onClose} // Close sidebar on navigation for mobile
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:bg-primary-foreground/10",
+                  isActive && "bg-primary-foreground/20"
+                )
+              }
+            >
+              {item.icon}
+              <span>{item.text}</span>
+            </NavLink>
+          ))}
       </nav>
       <div className="p-4 border-t border-primary-foreground/20">
         <NavLink

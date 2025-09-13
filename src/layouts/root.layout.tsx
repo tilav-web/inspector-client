@@ -10,28 +10,25 @@ export default function RootLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (!inspector) {
-      navigate("/auth");
-    } else {
-      switch (inspector.auth.role) {
-        case "state":
-          navigate("/");
-          break;
-        case "region":
-          navigate("/region");
-          break;
-        case "district":
-          navigate("/district");
-          break;
-        case "neighborhood":
-          navigate("/neighborhood");
-          break;
-        default:
-          navigate("/auth");
-          break;
-      }
+    if (!inspector?.auth.role) navigate("/auth");
+    switch (inspector?.auth.role) {
+      case "state":
+        navigate("/");
+        break;
+      case "region":
+        navigate("/region");
+        break;
+      case "district":
+        navigate("/district");
+        break;
+      case "neighborhood":
+        navigate("/neighborhood");
+        break;
+      default:
+        navigate("/auth");
+        break;
     }
-  }, [inspector, navigate]);
+  }, [inspector?.auth.role, navigate]);
 
   return (
     <div className="flex min-h-screen bg-background">

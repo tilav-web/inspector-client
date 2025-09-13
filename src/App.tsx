@@ -15,6 +15,14 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
+        path: "/",
+        element: (
+          <SubLayout roles={["state"]}>
+            <div>Region page</div>
+          </SubLayout>
+        ),
+      },
+      {
         path: "/region/*",
         element: (
           <SubLayout roles={["region"]}>
@@ -33,14 +41,18 @@ const router = createBrowserRouter([
       {
         path: "/citizens/*",
         element: (
-          <SubLayout roles={["neighborhood"]}>
+          <SubLayout roles={["state", "region", "district", "neighborhood"]}>
             <Citizens />
           </SubLayout>
         ),
       },
       {
         path: "/inspectors",
-        element: <Inspectors />,
+        element: (
+          <SubLayout roles={["state", "region", "district"]}>
+            <Inspectors />
+          </SubLayout>
+        ),
       },
       {
         path: "/profile",

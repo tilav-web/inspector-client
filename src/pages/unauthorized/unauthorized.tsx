@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
+import { useInspectorStore } from "@/stores/inspector.store";
 import { ShieldOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function Unauthorized() {
   const navigate = useNavigate();
+  const { inspector } = useInspectorStore();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background text-center p-6">
@@ -13,12 +15,10 @@ export default function Unauthorized() {
           Ruxsat Rad Etildi
         </h1>
         <p className="text-lg text-muted-foreground mb-8">
-          Kechirasiz, sizda ushbu sahifani ko'rish uchun kerakli ruxsatlar mavjud emas.
+          Kechirasiz, sizda ushbu sahifani ko'rish uchun kerakli ruxsatlar
+          mavjud emas.
         </p>
-        <Button 
-          onClick={() => navigate("/")} 
-          size="lg"
-        >
+        <Button onClick={() => navigate(`/${inspector?.auth.role}`)} size="lg">
           Bosh sahifaga qaytish
         </Button>
       </div>

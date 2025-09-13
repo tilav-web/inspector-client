@@ -8,9 +8,9 @@ export interface IInspector {
   middle_name: string;
   birthday: string;
   rank: string; // MFY Inspector ==== unvoni
-  region: string; // id
-  district: string; // id
-  neighborhood: string; //id
+  region: string;
+  district: string;
+  neighborhood: string;
   pinfl: number;
   passport_number: number;
   passport_series: string;
