@@ -14,6 +14,7 @@ import AddEditCitizenPage from "./pages/citizens/add-edit-citizen";
 import CitizenPage from "./pages/citizens/citizen";
 import ReportsPage from "./pages/reports/reports";
 import WorkflowsPage from "./pages/workflows/workflows";
+import Regions from "./pages/regions/regions";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,14 @@ const router = createBrowserRouter([
         element: (
           <SubLayout roles={["state"]}>
             <div>Region page</div>
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/regions/*",
+        element: (
+          <SubLayout roles={["state"]}>
+            <Regions />
           </SubLayout>
         ),
       },

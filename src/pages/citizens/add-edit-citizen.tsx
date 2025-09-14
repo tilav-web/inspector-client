@@ -97,7 +97,7 @@ export default function AddEditCitizenPage() {
 
                 <SectionCard title="Yashash joyi" description="Doimiy yashash manzilini kiriting." icon={<MapPin size={24} />}>
                     <FormItem label="Viloyat">
-                        <Select value={citizen.region} onValueChange={value => handleChange('region', value)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{regions.map(r => <SelectItem key={r} value={r}>{r}</SelectItem>)}</SelectContent></Select>
+                        <Select value={citizen.region} onValueChange={value => handleChange('region', value)}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{regions.map(r => <SelectItem key={r.id} value={r.name}>{r.name}</SelectItem>)}</SelectContent></Select>
                     </FormItem>
                     <FormItem label="Tuman/Shahar">
                          <Select value={citizen.district} onValueChange={value => handleChange('district', value)} disabled={!citizen.region}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{(districtsByRegion[citizen.region || ''] || []).map(d => <SelectItem key={d} value={d}>{d}</SelectItem>)}</SelectContent></Select>

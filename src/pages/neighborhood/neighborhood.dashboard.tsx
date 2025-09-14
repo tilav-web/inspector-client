@@ -18,7 +18,6 @@ import {
   AlertCircle,
   Settings,
   BarChart3,
-  Smartphone,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -230,7 +229,7 @@ export default function NeighborhoodDashboard() {
                   variant="outline"
                   asChild
                 >
-                  <Link to="/workflows">
+                  <Link to="/neighborhood/workflows">
                     <Users className="w-4 h-4 mr-2" />
                     Ish oqimlarini boshqarish
                   </Link>
@@ -240,7 +239,7 @@ export default function NeighborhoodDashboard() {
                   variant="outline"
                   asChild
                 >
-                  <Link to="/timetable">
+                  <Link to="/neighborhood/timetable">
                     <Calendar className="w-4 h-4 mr-2" />
                     Jadvalni ko'rish
                   </Link>
@@ -249,12 +248,7 @@ export default function NeighborhoodDashboard() {
                   className="w-full justify-start bg-transparent"
                   variant="outline"
                   asChild
-                >
-                  <Link to="/mobile">
-                    <Smartphone className="w-4 h-4 mr-2" />
-                    Mobil interfeys
-                  </Link>
-                </Button>
+                ></Button>
               </CardContent>
             </Card>
 

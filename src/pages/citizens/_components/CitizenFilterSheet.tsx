@@ -92,8 +92,8 @@ export const CitizenFilterSheet = ({
             >
               <option value="__all__">Barchasi</option>
               {regions.map((r) => (
-                <option key={r} value={r}>
-                  {r}
+                <option key={r.id} value={r.name}>
+                  {r.name}
                 </option>
               ))}
             </select>
