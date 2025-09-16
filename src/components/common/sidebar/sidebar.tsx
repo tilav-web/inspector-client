@@ -124,7 +124,7 @@ const menuItems = {
       text: "Fuqorolar",
     },
     {
-      to: "/calls",
+      to: "/neighborhood/calls",
       icon: <Siren className="h-5 w-5" />,
       text: "Chaqiruvlar",
     },

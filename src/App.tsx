@@ -18,6 +18,7 @@ import Regions from "./pages/regions/regions";
 import DistrictPage from "./pages/district/district.page";
 import StatePage from "./pages/state/state.page";
 import RegionPage from "./pages/region/region.page";
+import CallsPage from "./pages/calls/calls";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/district/*",
-        element: ( 
+        element: (
           <SubLayout roles={["district"]}>
             <DistrictPage />
           </SubLayout>
@@ -61,6 +62,14 @@ const router = createBrowserRouter([
         element: (
           <SubLayout roles={["neighborhood"]}>
             <NeighborhoodDashboard />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/neighborhood/calls",
+        element: (
+          <SubLayout roles={["neighborhood"]}>
+            <CallsPage />
           </SubLayout>
         ),
       },
