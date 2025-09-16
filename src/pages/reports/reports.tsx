@@ -248,7 +248,7 @@ export default function ReportsPage() {
     <div>
       <div className="bg-background">
         <div className="p-6 space-y-6">
-                      <div className="flex justify-between items-center mb-6">
+          <div className="flex justify-between items-center mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
                 <FileText className="text-blue-600" />
@@ -271,7 +271,9 @@ export default function ReportsPage() {
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList>
-              <TabsTrigger value="overview">Samaradorlik ko'rinishi</TabsTrigger>
+              <TabsTrigger value="overview">
+                Samaradorlik ko'rinishi
+              </TabsTrigger>
               <TabsTrigger value="analytics">Batafsil tahlil</TabsTrigger>
               <TabsTrigger value="reports">Yaratilgan hisobotlar</TabsTrigger>
             </TabsList>
@@ -338,7 +340,11 @@ export default function ReportsPage() {
                           fill="#059669"
                           name="Bajarilgan"
                         />
-                        <Bar dataKey="pending" fill="#f59e0b" name="Kutilayotgan" />
+                        <Bar
+                          dataKey="pending"
+                          fill="#f59e0b"
+                          name="Kutilayotgan"
+                        />
                       </BarChart>
                     </ResponsiveContainer>
                   </CardContent>
@@ -364,9 +370,30 @@ export default function ReportsPage() {
                           cy="50%"
                           outerRadius={80}
                           dataKey="value"
-                          label={({ name, percent }: { name: string; percent: number }) =>
-                            `${name} ${(percent * 100).toFixed(0)}%`
-                          }
+                          label={(props) => {
+                            const { x, y, name, percent } = props as {
+                              x?: number;
+                              y?: number;
+                              name?: string;
+                              percent?: number;
+                              textAnchor?: "start" | "middle" | "end";
+                            };
+
+                            return (
+                              <text
+                                x={x}
+                                y={y}
+                                textAnchor="middle"
+                                dominantBaseline="central"
+                                fill="#333"
+                              >
+                                {`${name ?? ""} ${(percent
+                                  ? percent * 100
+                                  : 0
+                                ).toFixed(0)}%`}
+                              </text>
+                            );
+                          }}
                         >
                           {workflowTypeData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color} />
@@ -500,9 +527,7 @@ export default function ReportsPage() {
 
                   <Card>
                     <CardHeader>
-                      <CardTitle className="text-lg">
-                        Xizmat turlari
-                      </CardTitle>
+                      <CardTitle className="text-lg">Xizmat turlari</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="flex items-center justify-between">
@@ -597,7 +622,8 @@ export default function ReportsPage() {
                 <CardHeader>
                   <CardTitle>Yangi hisobot yaratish</CardTitle>
                   <CardDescription>
-                    Turli vaqt davrlari va ko'rsatkichlar uchun maxsus hisobotlar yaratish
+                    Turli vaqt davrlari va ko'rsatkichlar uchun maxsus
+                    hisobotlar yaratish
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -637,7 +663,7 @@ export default function ReportsPage() {
                     </Select>
                     <Button>
                       <FileText className="w-4 h-4 mr-2" />
-Hisobot yaratish
+                      Hisobot yaratish
                     </Button>
                   </div>
                 </CardContent>
@@ -688,7 +714,7 @@ Hisobot yaratish
                           {report.status === "completed" && (
                             <Button variant="outline" size="sm">
                               <Download className="w-4 h-4 mr-2" />
-Yuklab olish
+                              Yuklab olish
                             </Button>
                           )}
                         </div>

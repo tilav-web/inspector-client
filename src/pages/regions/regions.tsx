@@ -113,6 +113,7 @@ export default function RegionsPage() {
   }) => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("");
+    console.log(value);
 
     useEffect(() => {
       if (currentInspector) {
