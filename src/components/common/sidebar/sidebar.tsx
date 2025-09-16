@@ -6,7 +6,6 @@ import {
   User,
   BarChart2,
   Settings,
-  ShieldCheck,
   Users,
   MapPin,
   Building2,
@@ -72,11 +71,6 @@ const menuItems = {
       to: "/neighborhoods",
       icon: <Briefcase className="h-5 w-5" />,
       text: "Mahallalar",
-    },
-    {
-      to: "/admin",
-      icon: <ShieldCheck className="h-5 w-5" />,
-      text: "Admin Panel",
     },
   ],
   district: [

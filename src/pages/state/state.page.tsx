@@ -1,92 +1,237 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Button } from "@/components/ui/button";
 
-// Sample data for the chart (replace with API data in a real app)
-const chartData = [
-  { name: 'Tashkent', inspectors: 1500, workflows: 1200 },
-  { name: 'Andijan', inspectors: 800, workflows: 600 },
-  { name: 'Fergana', inspectors: 900, workflows: 700 },
-  { name: 'Qoraqalpog\'iston', inspectors: 400, workflows: 300 },
-];
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  MOCK_CITIZENS,
+  MOCK_INSPECTORS,
+  regions,
+  districtsByRegion,
+} from "@/const/mock.data";
+import { MOCK_REPORTS } from "../reports/mock-reports";
+import { MOCK_WORKFLOWS } from "../workflows/mock-workflows";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+} from "recharts";
+import { Building, Users, UserCheck, FileText, GitBranch } from "lucide-react";
+import { useMemo } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export default function StatePage() {
-  // Mock statistics (replace with real data from your backend)
-  const stats = {
-    totalInspectors: 4500,
-    activeWorkflows: 3500,
-    completedReports: 3000,
-    allocatedResources: 2500000, // in UZS
-  };
+  const totalRegions = regions.length;
+  const totalDistricts = Object.values(districtsByRegion).flat().length;
+  const totalInspectors = MOCK_INSPECTORS.length;
+  const totalCitizens = MOCK_CITIZENS.length;
+  const totalReports = MOCK_REPORTS.length;
+  const totalWorkflows = MOCK_WORKFLOWS.length;
+
+  const citizensByRegion = useMemo(() => {
+    const counts: { [key: string]: number } = {};
+    for (const citizen of MOCK_CITIZENS) {
+      counts[citizen.region] = (counts[citizen.region] || 0) + 1;
+    }
+    return regions.map((region) => ({
+      name: region.name,
+      fuqarolar: counts[region.name] || 0,
+    }));
+  }, []);
+
+  const inspectorRoles = useMemo(() => {
+    const counts: { [key: string]: number } = {};
+    for (const inspector of MOCK_INSPECTORS) {
+      counts[inspector.auth.role] = (counts[inspector.auth.role] || 0) + 1;
+    }
+    return Object.entries(counts).map(([name, value]) => ({
+      name: name.charAt(0).toUpperCase() + name.slice(1),
+      value,
+    }));
+  }, []);
+
+  const regionStats = useMemo(() => {
+    return regions.map((region) => {
+      const inspectorsInRegion = MOCK_INSPECTORS.filter(
+        (i) => i.region === region.name
+      ).length;
+      const citizensInRegion = MOCK_CITIZENS.filter(
+        (c) => c.region === region.name
+      ).length;
+      return {
+        name: region.name,
+        inspectors: inspectorsInRegion,
+        citizens: citizensInRegion,
+      };
+    });
+  }, []);
+
+  const kpiData = [
+    {
+      title: "Jami viloyatlar",
+      value: totalRegions,
+      icon: Building,
+      color: "text-blue-500",
+    },
+    {
+      title: "Jami tumanlar",
+      value: totalDistricts,
+      icon: Building,
+      color: "text-sky-500",
+    },
+    {
+      title: "Jami inspektorlar",
+      value: totalInspectors,
+      icon: UserCheck,
+      color: "text-green-500",
+    },
+    {
+      title: "Jami fuqarolar",
+      value: totalCitizens,
+      icon: Users,
+      color: "text-orange-500",
+    },
+    {
+      title: "Jami hisobotlar",
+      value: totalReports,
+      icon: FileText,
+      color: "text-indigo-500",
+    },
+    {
+      title: "Jami ish jarayonlari",
+      value: totalWorkflows,
+      icon: GitBranch,
+      color: "text-purple-500",
+    },
+  ];
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">State Admin Statistics</h1>
-      
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Inspectors</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-4xl font-bold text-blue-600">{stats.totalInspectors}</p>
-            <p className="text-sm text-gray-500">Across all regions</p>
-          </CardContent>
-        </Card>
+    <div className="min-h-screen p-4 md:p-6 space-y-6">
+      <h1 className="text-3xl font-bold text-gray-800">
+        Respublika bo'yicha umumiy statistika
+      </h1>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Active Workflows</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-4xl font-bold text-green-600">{stats.activeWorkflows}</p>
-            <p className="text-sm text-gray-500">In progress</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Completed Reports</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-4xl font-bold text-purple-600">{stats.completedReports}</p>
-            <p className="text-sm text-gray-500">This quarter</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Allocated Resources</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-4xl font-bold text-yellow-600">{stats.allocatedResources} UZS</p>
-            <p className="text-sm text-gray-500">Total budget</p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+        {kpiData.map((kpi, index) => (
+          <Card key={index} className="shadow-md hover:shadow-lg transition-all">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                {kpi.title}
+              </CardTitle>
+              <kpi.icon className={`h-5 w-5 ${kpi.color}`} />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{kpi.value}</div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      <div className="mt-6">
-        <Card>
+      <div className="grid lg:grid-cols-5 gap-6">
+        <Card className="lg:col-span-3 shadow-md">
           <CardHeader>
-            <CardTitle>Regional Workflow Overview</CardTitle>
+            <CardTitle>Viloyatlar bo'yicha fuqarolar soni</CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={chartData}>
+            <ResponsiveContainer width="100%" height={350}>
+              <BarChart data={citizensByRegion}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" stroke="#333" />
-                <YAxis stroke="#333" />
+                <XAxis
+                  dataKey="name"
+                  angle={-45}
+                  textAnchor="end"
+                  height={100}
+                  interval={0}
+                  tick={{ fontSize: 12 }}
+                />
+                <YAxis />
                 <Tooltip />
-                <Legend />
-                <Bar dataKey="inspectors" fill="#8884d8" name="Inspectors" />
-                <Bar dataKey="workflows" fill="#82ca9d" name="Workflows" />
+                <Bar dataKey="fuqarolar" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
-            <Button className="mt-4" variant="outline">Export Data</Button>
+          </CardContent>
+        </Card>
+
+        <Card className="lg:col-span-2 shadow-md">
+          <CardHeader>
+            <CardTitle>Inspektorlar lavozimlari bo'yicha</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={350}>
+              <PieChart>
+                <Pie
+                  data={inspectorRoles}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={120}
+                  fill="#8884d8"
+                  dataKey="value"
+                  label={(entry) => `${entry.name}: ${entry.value}`}
+                >
+                  {inspectorRoles.map((_entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={COLORS[index % COLORS.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
+
+      <Card className="shadow-md">
+        <CardHeader>
+          <CardTitle>Viloyatlar kesimida statistika</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Viloyat</TableHead>
+                <TableHead className="text-right">Inspektorlar soni</TableHead>
+                <TableHead className="text-right">Fuqarolar soni</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {regionStats.map((region) => (
+                <TableRow key={region.name}>
+                  <TableCell className="font-medium">{region.name}</TableCell>
+                  <TableCell className="text-right">
+                    {region.inspectors}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {region.citizens}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
     </div>
   );
-};
+}
