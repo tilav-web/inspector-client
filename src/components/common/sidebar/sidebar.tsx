@@ -80,11 +80,6 @@ const menuItems = {
     },
     { to: "/profile", icon: <User className="h-5 w-5" />, text: "Profil" },
     {
-      to: "/reports",
-      icon: <BarChart2 className="h-5 w-5" />,
-      text: "Hisobotlar",
-    },
-    {
       to: "/inspectors",
       icon: <Shield className="h-5 w-5" />,
       text: "Inspektorlar",

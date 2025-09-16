@@ -154,58 +154,58 @@ export default function ReportsPage() {
 
   // Mock data for charts and analytics
   const taskCompletionData = [
-    { name: "Mon", completed: 12, pending: 3, total: 15 },
-    { name: "Tue", completed: 15, pending: 2, total: 17 },
-    { name: "Wed", completed: 8, pending: 5, total: 13 },
-    { name: "Thu", completed: 18, pending: 1, total: 19 },
-    { name: "Fri", completed: 14, pending: 4, total: 18 },
-    { name: "Sat", completed: 6, pending: 2, total: 8 },
-    { name: "Sun", completed: 4, pending: 1, total: 5 },
+    { name: "Dush", completed: 12, pending: 3, total: 15 },
+    { name: "Sesh", completed: 15, pending: 2, total: 17 },
+    { name: "Chor", completed: 8, pending: 5, total: 13 },
+    { name: "Pay", completed: 18, pending: 1, total: 19 },
+    { name: "Jum", completed: 14, pending: 4, total: 18 },
+    { name: "Shan", completed: 6, pending: 2, total: 8 },
+    { name: "Yak", completed: 4, pending: 1, total: 5 },
   ];
 
   const workflowTypeData = [
-    { name: "Tenant Registration", value: 35, color: "#059669" },
-    { name: "Resource Allocation", value: 25, color: "#10b981" },
-    { name: "Infrastructure Inspection", value: 20, color: "#34d399" },
-    { name: "Dispute Resolution", value: 15, color: "#6ee7b7" },
-    { name: "Reporting", value: 5, color: "#a7f3d0" },
+    { name: "Fuqaro ro'yxatdan o'tkazish", value: 35, color: "#059669" },
+    { name: "Resurs taqsimlash", value: 25, color: "#10b981" },
+    { name: "Infratuzilma tekshiruvi", value: 20, color: "#34d399" },
+    { name: "Nizolarni hal qilish", value: 15, color: "#6ee7b7" },
+    { name: "Hisobot berish", value: 5, color: "#a7f3d0" },
   ];
 
   const monthlyTrendsData = [
-    { month: "Oct", workflows: 45, residents: 1200, inspections: 28 },
-    { month: "Nov", workflows: 52, residents: 1235, inspections: 31 },
-    { month: "Dec", workflows: 48, residents: 1247, inspections: 29 },
-    { month: "Jan", workflows: 58, residents: 1268, inspections: 35 },
+    { month: "Okt", workflows: 45, residents: 1200, inspections: 28 },
+    { month: "Noy", workflows: 52, residents: 1235, inspections: 31 },
+    { month: "Dek", workflows: 48, residents: 1247, inspections: 29 },
+    { month: "Yan", workflows: 58, residents: 1268, inspections: 35 },
   ];
 
   const performanceMetrics = [
     {
-      title: "Task Completion Rate",
+      title: "Vazifa bajarish darajasi",
       value: "94.2%",
       change: "+2.1%",
       trend: "up",
-      description: "Tasks completed on time",
+      description: "Vaqtida bajarilgan vazifalar",
     },
     {
-      title: "Average Response Time",
-      value: "2.3h",
-      change: "-0.5h",
+      title: "O'rtacha javob berish vaqti",
+      value: "2.3s",
+      change: "-0.5s",
       trend: "up",
-      description: "Time to respond to requests",
+      description: "So'rovlarga javob berish vaqti",
     },
     {
-      title: "Resident Satisfaction",
+      title: "Fuqaro qoniqish darajasi",
       value: "4.6/5",
       change: "+0.2",
       trend: "up",
-      description: "Average satisfaction rating",
+      description: "O'rtacha qoniqish bahosi",
     },
     {
-      title: "Workflow Efficiency",
+      title: "Ish jarayoni samaradorligi",
       value: "87%",
       change: "-1.2%",
       trend: "down",
-      description: "Workflows completed within SLA",
+      description: "SLA doirasida yakunlangan ish jarayonlari",
     },
   ];
 
@@ -271,9 +271,9 @@ export default function ReportsPage() {
           </div>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList>
-              <TabsTrigger value="overview">Performance Overview</TabsTrigger>
-              <TabsTrigger value="analytics">Detailed Analytics</TabsTrigger>
-              <TabsTrigger value="reports">Generated Reports</TabsTrigger>
+              <TabsTrigger value="overview">Samaradorlik ko'rinishi</TabsTrigger>
+              <TabsTrigger value="analytics">Batafsil tahlil</TabsTrigger>
+              <TabsTrigger value="reports">Yaratilgan hisobotlar</TabsTrigger>
             </TabsList>
 
             <TabsContent value="overview" className="space-y-6">
@@ -320,10 +320,10 @@ export default function ReportsPage() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <BarChart3 className="w-5 h-5" />
-                      Weekly Task Completion
+                      Haftalik vazifa bajarish
                     </CardTitle>
                     <CardDescription>
-                      Daily task completion vs pending tasks
+                      Kunlik bajarilgan va kutilayotgan vazifalar
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -336,9 +336,9 @@ export default function ReportsPage() {
                         <Bar
                           dataKey="completed"
                           fill="#059669"
-                          name="Completed"
+                          name="Bajarilgan"
                         />
-                        <Bar dataKey="pending" fill="#f59e0b" name="Pending" />
+                        <Bar dataKey="pending" fill="#f59e0b" name="Kutilayotgan" />
                       </BarChart>
                     </ResponsiveContainer>
                   </CardContent>
@@ -349,10 +349,10 @@ export default function ReportsPage() {
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <PieChartIcon className="w-5 h-5" />
-                      Workflow Distribution
+                      Ish jarayoni taqsimoti
                     </CardTitle>
                     <CardDescription>
-                      Breakdown of workflow types this month
+                      Bu oydagi ish jarayoni turlari bo'yicha taqsimot
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -364,7 +364,7 @@ export default function ReportsPage() {
                           cy="50%"
                           outerRadius={80}
                           dataKey="value"
-                          label={({ name, percent }) =>
+                          label={({ name, percent }: { name: string; percent: number }) =>
                             `${name} ${(percent * 100).toFixed(0)}%`
                           }
                         >
@@ -382,9 +382,9 @@ export default function ReportsPage() {
               {/* Monthly Trends */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Monthly Trends</CardTitle>
+                  <CardTitle>Oylik tendentsiyalar</CardTitle>
                   <CardDescription>
-                    Key metrics over the past 4 months
+                    Oxirgi 4 oy davomidagi asosiy ko'rsatkichlar
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -398,21 +398,21 @@ export default function ReportsPage() {
                         type="monotone"
                         dataKey="workflows"
                         stroke="#059669"
-                        name="Workflows"
+                        name="Ish jarayonlari"
                         strokeWidth={2}
                       />
                       <Line
                         type="monotone"
                         dataKey="residents"
                         stroke="#10b981"
-                        name="Active Residents"
+                        name="Faol fuqarolar"
                         strokeWidth={2}
                       />
                       <Line
                         type="monotone"
                         dataKey="inspections"
                         stroke="#34d399"
-                        name="Inspections"
+                        name="Tekshiruvlar"
                         strokeWidth={2}
                       />
                     </LineChart>
@@ -426,9 +426,9 @@ export default function ReportsPage() {
               <div className="grid lg:grid-cols-3 gap-6">
                 <Card className="lg:col-span-2">
                   <CardHeader>
-                    <CardTitle>Task Performance Analysis</CardTitle>
+                    <CardTitle>Vazifa bajarish tahlili</CardTitle>
                     <CardDescription>
-                      Detailed breakdown of task completion patterns
+                      Vazifa bajarish naqshlarining batafsil tahlili
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -463,7 +463,7 @@ export default function ReportsPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle className="text-lg">
-                        Inspector Performance
+                        Inspektor samaradorligi
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -501,35 +501,35 @@ export default function ReportsPage() {
                   <Card>
                     <CardHeader>
                       <CardTitle className="text-lg">
-                        Service Categories
+                        Xizmat turlari
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Users className="w-4 h-4 text-blue-500" />
-                          <span className="text-sm">Housing Services</span>
+                          <span className="text-sm">Uy-joy xizmatlari</span>
                         </div>
                         <span className="text-sm font-medium">342</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <MapPin className="w-4 h-4 text-green-500" />
-                          <span className="text-sm">Infrastructure</span>
+                          <span className="text-sm">Infratuzilma</span>
                         </div>
                         <span className="text-sm font-medium">156</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <AlertTriangle className="w-4 h-4 text-yellow-500" />
-                          <span className="text-sm">Dispute Resolution</span>
+                          <span className="text-sm">Nizolarni hal qilish</span>
                         </div>
                         <span className="text-sm font-medium">89</span>
                       </div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-purple-500" />
-                          <span className="text-sm">Registrations</span>
+                          <span className="text-sm">Ro'yxatdan o'tkazish</span>
                         </div>
                         <span className="text-sm font-medium">234</span>
                       </div>
@@ -545,11 +545,11 @@ export default function ReportsPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm text-muted-foreground">
-                          Average Resolution Time
+                          O'rtacha hal qilish vaqti
                         </p>
-                        <p className="text-2xl font-bold">3.2 days</p>
+                        <p className="text-2xl font-bold">3.2 kun</p>
                         <p className="text-xs text-green-600">
-                          -0.5 days from last month
+                          O'tgan oydan -0.5 kun
                         </p>
                       </div>
                       <Clock className="w-8 h-8 text-blue-500" />
@@ -561,11 +561,11 @@ export default function ReportsPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm text-muted-foreground">
-                          Active Workflows
+                          Faol ish jarayonlari
                         </p>
                         <p className="text-2xl font-bold">47</p>
                         <p className="text-xs text-blue-600">
-                          +8 from last week
+                          O'tgan haftadan +8
                         </p>
                       </div>
                       <FileText className="w-8 h-8 text-green-500" />
@@ -577,11 +577,11 @@ export default function ReportsPage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-sm text-muted-foreground">
-                          Resident Requests
+                          Fuqaro so'rovlari
                         </p>
                         <p className="text-2xl font-bold">128</p>
                         <p className="text-xs text-orange-600">
-                          +15 from last week
+                          O'tgan haftadan +15
                         </p>
                       </div>
                       <Users className="w-8 h-8 text-purple-500" />
@@ -595,49 +595,49 @@ export default function ReportsPage() {
               {/* Report Generation */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Generate New Report</CardTitle>
+                  <CardTitle>Yangi hisobot yaratish</CardTitle>
                   <CardDescription>
-                    Create custom reports for different time periods and metrics
+                    Turli vaqt davrlari va ko'rsatkichlar uchun maxsus hisobotlar yaratish
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Select>
                       <SelectTrigger>
-                        <SelectValue placeholder="Report Type" />
+                        <SelectValue placeholder="Hisobot turi" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="task-summary">
-                          Task Summary
+                          Vazifa hisoboti
                         </SelectItem>
                         <SelectItem value="workflow-analysis">
-                          Workflow Analysis
+                          Ish jarayoni tahlili
                         </SelectItem>
                         <SelectItem value="performance-metrics">
-                          Performance Metrics
+                          Samaradorlik ko'rsatkichlari
                         </SelectItem>
                         <SelectItem value="resident-services">
-                          Resident Services
+                          Fuqaro xizmatlari
                         </SelectItem>
                         <SelectItem value="infrastructure">
-                          Infrastructure Report
+                          Infratuzilma hisoboti
                         </SelectItem>
                       </SelectContent>
                     </Select>
                     <Select>
                       <SelectTrigger>
-                        <SelectValue placeholder="Time Period" />
+                        <SelectValue placeholder="Vaqt davri" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="daily">Daily</SelectItem>
-                        <SelectItem value="weekly">Weekly</SelectItem>
-                        <SelectItem value="monthly">Monthly</SelectItem>
-                        <SelectItem value="quarterly">Quarterly</SelectItem>
+                        <SelectItem value="daily">Kunlik</SelectItem>
+                        <SelectItem value="weekly">Haftalik</SelectItem>
+                        <SelectItem value="monthly">Oylik</SelectItem>
+                        <SelectItem value="quarterly">Choraklik</SelectItem>
                       </SelectContent>
                     </Select>
                     <Button>
                       <FileText className="w-4 h-4 mr-2" />
-                      Generate Report
+Hisobot yaratish
                     </Button>
                   </div>
                 </CardContent>
@@ -646,9 +646,9 @@ export default function ReportsPage() {
               {/* Recent Reports */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Recent Reports</CardTitle>
+                  <CardTitle>So'nggi hisobotlar</CardTitle>
                   <CardDescription>
-                    Previously generated reports and their status
+                    Ilgari yaratilgan hisobotlar va ularning holati
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -665,7 +665,7 @@ export default function ReportsPage() {
                             <div className="flex items-center gap-4 text-sm text-muted-foreground">
                               <span>{report.type}</span>
                               <span>
-                                Generated{" "}
+                                Yaratilgan{" "}
                                 {new Date(
                                   report.generatedDate
                                 ).toLocaleDateString()}
@@ -688,7 +688,7 @@ export default function ReportsPage() {
                           {report.status === "completed" && (
                             <Button variant="outline" size="sm">
                               <Download className="w-4 h-4 mr-2" />
-                              Download
+Yuklab olish
                             </Button>
                           )}
                         </div>
