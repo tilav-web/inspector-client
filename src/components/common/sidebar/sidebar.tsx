@@ -15,6 +15,8 @@ import {
   Shield,
   Network,
   ClipboardCheck,
+  Siren,
+  Map,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -36,6 +38,11 @@ const menuItems = {
       to: "/regions",
       icon: <Building2 className="h-5 w-5" />,
       text: "Viloyatlar",
+    },
+    {
+      to: "/districts",
+      icon: <Map className="h-5 w-5" />,
+      text: "Tumanlar",
     },
   ],
   region: [
@@ -121,6 +128,11 @@ const menuItems = {
       to: "/citizens",
       icon: <Users className="h-5 w-5" />,
       text: "Fuqorolar",
+    },
+    {
+      to: "/calls",
+      icon: <Siren className="h-5 w-5" />,
+      text: "Chaqiruvlar",
     },
   ],
 };

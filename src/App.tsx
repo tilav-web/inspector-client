@@ -16,6 +16,7 @@ import ReportsPage from "./pages/reports/reports";
 import WorkflowsPage from "./pages/workflows/workflows";
 import Regions from "./pages/regions/regions";
 import DistrictPage from "./pages/district/district.page";
+import StatePage from "./pages/state/state.page";
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         path: "/",
         element: (
           <SubLayout roles={["state"]}>
-            <div>Region page</div>
+            <StatePage />
           </SubLayout>
         ),
       },
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
           </SubLayout>
         ),
       },
-            {
+      {
         path: "/district/*",
         element: (
           <SubLayout roles={["district"]}>
