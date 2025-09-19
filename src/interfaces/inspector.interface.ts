@@ -17,7 +17,7 @@ export interface IInspector {
   gender: "male" | "female";
   phone: string;
   nationality: string; // millati
-  workplace: IInspectorWorkplace[];
+  workplaces: IInspectorWorkplace[];
   photo: string;
 }
 
