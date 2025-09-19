@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MOCK_INSPECTORS } from "@/const/mock.data";
+import { inspectorService } from "@/services/inspector.service";
 import { useInspectorStore } from "@/stores/inspector.store";
-import { useState } from "react";
+import { handleStorage } from "@/utils/handle-storage";
+import { AxiosError } from "axios";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -22,21 +24,23 @@ export default function Auth() {
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
     handleInspectorLoading(true);
-    const foundInspector = MOCK_INSPECTORS.find(
-      (inspector) => inspector.auth.username === username
-    );
-
-    if (foundInspector) {
-      setInspector(foundInspector);
+    try {
+      const data = await inspectorService.login({ username, password });
+      setInspector(data.inspector);
+      handleStorage({ key: "access_token", value: data.access_token });
       navigate("/");
-    } else {
-      toast.error("Xatolik", {
-        description: "Foydalanuvchi nomi yoki parol noto'g'ri",
-      });
+    } catch (error) {
+      if (error instanceof AxiosError)
+        return toast.error(error.response?.data.error, {
+          description: error.response?.data.message,
+        });
+      toast.error("Xatolik", { description: "Nomalum xatolik" });
+    } finally {
+      handleInspectorLoading(false);
     }
-    handleInspectorLoading(false);
   };
 
   return (
@@ -60,7 +64,7 @@ export default function Auth() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid gap-4">
+              <form onSubmit={handleLogin} className="grid gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="username">Foydalanuvchi nomi</Label>
                   <Input
@@ -88,11 +92,11 @@ export default function Auth() {
                 <Button
                   disabled={inspector_loading}
                   className="w-full cursor-pointer"
-                  onClick={handleLogin}
+                  type="submit"
                 >
                   Kirish
                 </Button>
-              </div>
+              </form>
             </CardContent>
           </Card>
         </div>

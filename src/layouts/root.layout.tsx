@@ -1,5 +1,6 @@
 import Header from "@/components/common/header/header";
 import Sidebar from "@/components/common/sidebar/sidebar";
+import ReloadSystem from "@/lib/reload-system";
 import { useInspectorStore } from "@/stores/inspector.store";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -66,6 +67,7 @@ export default function RootLayout() {
           <Outlet />
         </main>
       </div>
+      <ReloadSystem />
     </div>
   );
 }
