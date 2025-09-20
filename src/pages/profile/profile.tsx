@@ -36,7 +36,7 @@ export default function Profile() {
     return <Navigate to="/auth" />;
   }
 
-  const currentWorkplace = inspector.workplace.find(wp => wp.status === true);
+  const currentWorkplace = inspector.workplaces.find(wp => wp.status === true);
 
   return (
     <div className="container mx-auto p-4 md:p-8 space-y-6">
@@ -88,7 +88,7 @@ export default function Profile() {
             <CardTitle>Ish joylari</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            {inspector.workplace.map((wp) => (
+            {inspector.workplaces.map((wp) => (
               <div key={wp.id} className="flex items-start gap-4">
                 <div className="bg-muted p-3 rounded-lg">
                     <Building className="h-5 w-5 text-foreground" />

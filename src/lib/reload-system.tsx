@@ -16,9 +16,9 @@ export default function ReloadSystem() {
         setInspector(data);
         navigate(location.pathname);
       } catch (error) {
-        console.log(error);
         logout();
-        navigate("/");
+        navigate("/auth");
+        console.log(error);
       }
     })();
   }, [navigate, setInspector, logout, location.pathname]);

@@ -325,9 +325,9 @@ export default function RegionsPage() {
                     <p className="text-sm font-medium text-gray-600">
                       Ish joylari
                     </p>
-                    {inspector.workplace.length > 0 ? (
+                    {inspector.workplaces.length > 0 ? (
                       <ul className="text-sm text-gray-700 leading-relaxed list-disc list-inside">
-                        {inspector.workplace.map((wp) => (
+                        {inspector.workplaces.map((wp) => (
                           <li key={wp.id}>
                             {wp.position} - {wp.region}, {wp.district} (
                             {wp.status ? "Faol" : "Faol emas"})

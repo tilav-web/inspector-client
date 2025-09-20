@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Table,
   TableBody,
@@ -15,31 +16,244 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowLeft,
-  ArrowRight,
-  User,
-  Phone,
-  MapPin,
-} from "lucide-react";
-import type { IInspector } from "@/interfaces/inspector.interface";
+import { ArrowLeft, ArrowRight, User, Phone, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-interface InspectorsTableProps {
-  inspectors: IInspector[];
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  onInspectorClick: (inspector: IInspector) => void;
-  onViewProfile: (inspectorId: string) => void;
+// Mock ma'lumotlar - serverdan keladigan ma'lumotlar strukturasi
+interface IInspector {
+  _id: string;
+  auth: {
+    _id: string;
+    username: string;
+    role: string;
+  };
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  birthday: string;
+  rank: string;
+  address: {
+    region: {
+      _id: string;
+      name: string;
+    };
+    district: {
+      _id: string;
+      region: string;
+      name: string;
+    };
+    neighborhood: {
+      _id: string;
+      region: string;
+      district: string;
+      name: string;
+    };
+    detail: string;
+  };
+  pinfl: number;
+  passport_number: number;
+  passport_series: string;
+  gender: string;
+  phone: string;
+  nationality: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  workplaces: Array<{
+    _id: string;
+    inspector: string;
+    position: string;
+    region: string;
+    district: string;
+    neighborhood: string;
+    note: string;
+    status: boolean;
+    __v: number;
+  }>;
 }
 
-export const InspectorsTable = ({
-  inspectors,
-  onInspectorClick,
-  onViewProfile,
-}: InspectorsTableProps) => {
+// Mock ma'lumotlar
+const mockInspectors: IInspector[] = [
+  {
+    _id: "68cd29ebe25477031d74c802",
+    auth: {
+      _id: "68cd29ebe25477031d74c800",
+      username: "shavqiddin_tilovov",
+      role: "state",
+    },
+    first_name: "Shavqiddin",
+    last_name: "Tilovov",
+    middle_name: "Sobirjon o‘g‘li",
+    birthday: "1998-07-21",
+    rank: "MFY Inspectori",
+    address: {
+      region: {
+        _id: "68cd1ee48c278f85face5f4e",
+        name: "Qashqadaryo viloyati",
+      },
+      district: {
+        _id: "68cd1f938c278f85face5f55",
+        region: "68cd1ee48c278f85face5f4e",
+        name: "Muborak tumani",
+      },
+      neighborhood: {
+        _id: "68cd20c08c278f85face5f56",
+        region: "68cd1ee48c278f85face5f4e",
+        district: "68cd1f938c278f85face5f55",
+        name: "Tong MFY",
+      },
+      detail: "Qashqadaryo viloyati Muborak tumani Tong MFY 32-uy 38-xonadon",
+    },
+    pinfl: 12345678901234,
+    passport_number: 1234567,
+    passport_series: "AB",
+    gender: "male",
+    phone: "+998901234567",
+    nationality: "O‘zbek",
+    createdAt: "2025-09-19T10:01:15.691Z",
+    updatedAt: "2025-09-19T10:01:15.691Z",
+    __v: 0,
+    workplaces: [
+      {
+        _id: "68cd29ebe25477031d74c804",
+        inspector: "68cd29ebe25477031d74c802",
+        position: "General",
+        region: "68cd1ee48c278f85face5f4e",
+        district: "68cd1f938c278f85face5f55",
+        neighborhood: "68cd20c08c278f85face5f56",
+        note: "Super admin sifatida",
+        status: true,
+        __v: 0,
+      },
+    ],
+  },
+  {
+    _id: "68cd29ebe25477031d74c803",
+    auth: {
+      _id: "68cd29ebe25477031d74c801",
+      username: "dilshod_rahimov",
+      role: "district",
+    },
+    first_name: "Dilshod",
+    last_name: "Rahimov",
+    middle_name: "Javlonbek o'g'li",
+    birthday: "1995-03-15",
+    rank: "Tuman Inspectori",
+    address: {
+      region: {
+        _id: "68cd1ee48c278f85face5f4e",
+        name: "Qashqadaryo viloyati",
+      },
+      district: {
+        _id: "68cd1f938c278f85face5f55",
+        region: "68cd1ee48c278f85face5f4e",
+        name: "Muborak tumani",
+      },
+      neighborhood: {
+        _id: "68cd20c08c278f85face5f57",
+        region: "68cd1ee48c278f85face5f4e",
+        district: "68cd1f938c278f85face5f55",
+        name: "Yangiobod MFY",
+      },
+      detail:
+        "Qashqadaryo viloyati Muborak tumani Yangiobod MFY 45-uy 12-xonadon",
+    },
+    pinfl: 98765432109876,
+    passport_number: 7654321,
+    passport_series: "AC",
+    gender: "male",
+    phone: "+998907654321",
+    nationality: "O‘zbek",
+    createdAt: "2025-09-18T08:30:45.123Z",
+    updatedAt: "2025-09-18T08:30:45.123Z",
+    __v: 0,
+    workplaces: [
+      {
+        _id: "68cd29ebe25477031d74c805",
+        inspector: "68cd29ebe25477031d74c803",
+        position: "Inspector",
+        region: "68cd1ee48c278f85face5f4e",
+        district: "68cd1f938c278f85face5f55",
+        neighborhood: "68cd20c08c278f85face5f57",
+        note: "Tuman inspectori",
+        status: true,
+        __v: 0,
+      },
+    ],
+  },
+  {
+    _id: "68cd29ebe25477031d74c806",
+    auth: {
+      _id: "68cd29ebe25477031d74c802",
+      username: "gulnora_azimova",
+      role: "neighborhood",
+    },
+    first_name: "Gulnora",
+    last_name: "Azimova",
+    middle_name: "Rustam qizi",
+    birthday: "1990-12-05",
+    rank: "MFY Yordamchisi",
+    address: {
+      region: {
+        _id: "68cd1ee48c278f85face5f4e",
+        name: "Qashqadaryo viloyati",
+      },
+      district: {
+        _id: "68cd1f938c278f85face5f55",
+        region: "68cd1ee48c278f85face5f4e",
+        name: "Muborak tumani",
+      },
+      neighborhood: {
+        _id: "68cd20c08c278f85face5f56",
+        region: "68cd1ee48c278f85face5f4e",
+        district: "68cd1f938c278f85face5f55",
+        name: "Tong MFY",
+      },
+      detail: "Qashqadaryo viloyati Muborak tumani Tong MFY 18-uy 5-xonadon",
+    },
+    pinfl: 45678901234567,
+    passport_number: 2345678,
+    passport_series: "AD",
+    gender: "female",
+    phone: "+998902345678",
+    nationality: "O‘zbek",
+    createdAt: "2025-09-17T14:20:30.456Z",
+    updatedAt: "2025-09-17T14:20:30.456Z",
+    __v: 0,
+    workplaces: [
+      {
+        _id: "68cd29ebe25477031d74c807",
+        inspector: "68cd29ebe25477031d74c806",
+        position: "Assistant",
+        region: "68cd1ee48c278f85face5f4e",
+        district: "68cd1f938c278f85face5f55",
+        neighborhood: "68cd20c08c278f85face5f56",
+        note: "MFY yordamchisi",
+        status: true,
+        __v: 0,
+      },
+    ],
+  },
+];
+
+export const InspectorsTable = () => {
+  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+  const totalPages = Math.ceil(mockInspectors.length / itemsPerPage);
+
+  // Joriy sahifada ko'rsatiladigan inspektorlar
+  const currentInspectors = mockInspectors.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const handleViewProfile = (inspectorId: string) => {
+    navigate(`/inspectors/actions/${inspectorId}`);
+  };
+
   return (
-    <div className="rounded-lg border border-blue-100 overflow-hidden">
+    <div className="rounded-lg border border-blue-100 overflow-hidden bg-white shadow-sm">
       <Table>
         <TableHeader className="bg-gradient-to-r from-blue-50 to-blue-100">
           <TableRow className="border-blue-200">
@@ -48,7 +262,9 @@ export const InspectorsTable = ({
             </TableHead>
             <TableHead className="text-blue-900 font-semibold">Unvon</TableHead>
             <TableHead className="text-blue-900 font-semibold">Hudud</TableHead>
-            <TableHead className="text-blue-900 font-semibold">Telefon</TableHead>
+            <TableHead className="text-blue-900 font-semibold">
+              Telefon
+            </TableHead>
             <TableHead className="text-blue-900 font-semibold">Jinsi</TableHead>
             <TableHead className="text-right text-blue-900 font-semibold">
               Amallar
@@ -56,33 +272,22 @@ export const InspectorsTable = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {inspectors.length > 0 ? (
-            inspectors.map((inspector) => (
+          {currentInspectors.length > 0 ? (
+            currentInspectors.map((inspector) => (
               <TableRow
-                key={inspector.id}
-                className="cursor-pointer hover:bg-blue-50/50 transition-colors duration-200 border-blue-100"
-                onClick={() => onInspectorClick(inspector)}
+                key={inspector._id}
+                className="hover:bg-blue-50/50 transition-colors duration-200 border-blue-100"
               >
                 <TableCell className="font-medium text-gray-900">
                   <div className="flex items-center gap-3">
-                    <div className="w-18 h-22 overflow-hidden border-2 border-blue-200">
-                      <img
-                        src={inspector.photo}
-                        alt={`${inspector.first_name} ${inspector.last_name}`}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          const parent = target.parentElement;
-                          if (parent) {
-                            parent.innerHTML = '<div class="w-full h-full bg-blue-100 flex items-center justify-center"><svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg></div>';
-                          }
-                        }}
-                      />
+                    <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-blue-200 bg-blue-100 flex items-center justify-center">
+                      <User className="w-6 h-6 text-blue-600" />
                     </div>
                     <div>
                       <div className="font-medium">{`${inspector.first_name} ${inspector.last_name}`}</div>
-                      <div className="text-sm text-gray-500">{inspector.middle_name}</div>
+                      <div className="text-sm text-gray-500">
+                        {inspector.middle_name}
+                      </div>
                     </div>
                   </div>
                 </TableCell>
@@ -94,7 +299,7 @@ export const InspectorsTable = ({
                 <TableCell className="text-gray-700">
                   <div className="flex items-center gap-1">
                     <MapPin className="h-3 w-3 text-blue-500" />
-                    {`${inspector.region}, ${inspector.district}`}
+                    {`${inspector.address.region.name}, ${inspector.address.district.name}`}
                   </div>
                 </TableCell>
                 <TableCell className="text-gray-700">
@@ -119,10 +324,7 @@ export const InspectorsTable = ({
                     variant="outline"
                     size="sm"
                     className="border-blue-200 text-blue-700 hover:bg-blue-50 hover:border-blue-300"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onViewProfile(inspector.id);
-                    }}
+                    onClick={() => handleViewProfile(inspector._id)}
                   >
                     Ko'rish
                   </Button>
@@ -146,67 +348,54 @@ export const InspectorsTable = ({
           )}
         </TableBody>
       </Table>
-    </div>
-  );
-};
 
-interface PaginationProps {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-  totalCount: number;
-}
-
-export const TablePagination = ({
-  currentPage,
-  totalPages,
-  onPageChange,
-  totalCount,
-}: PaginationProps) => {
-  return (
-    <div className="flex justify-between items-center p-4 bg-blue-50/50 border-t border-blue-100">
-      <div className="text-sm text-blue-700">
-        {totalCount} ta inspektor topildi
+      {/* Pagination */}
+      <div className="flex justify-between items-center p-4 bg-blue-50/50 border-t border-blue-100">
+        <div className="text-sm text-blue-700">
+          {mockInspectors.length} ta inspektor topildi
+        </div>
+        <Pagination>
+          <PaginationContent>
+            <PaginationPrevious
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              className={
+                currentPage === 1
+                  ? "pointer-events-none opacity-50"
+                  : "hover:bg-blue-100 cursor-pointer"
+              }
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </PaginationPrevious>
+            {[...Array(totalPages)].map((_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(index + 1)}
+                  isActive={currentPage === index + 1}
+                  className={
+                    currentPage === index + 1
+                      ? "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+                      : "hover:bg-blue-100 cursor-pointer"
+                  }
+                >
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationNext
+              onClick={() =>
+                setCurrentPage(Math.min(totalPages, currentPage + 1))
+              }
+              className={
+                currentPage === totalPages
+                  ? "pointer-events-none opacity-50"
+                  : "hover:bg-blue-100 cursor-pointer"
+              }
+            >
+              <ArrowRight className="h-4 w-4" />
+            </PaginationNext>
+          </PaginationContent>
+        </Pagination>
       </div>
-      <Pagination>
-        <PaginationContent>
-          <PaginationPrevious
-            onClick={() => onPageChange(Math.max(1, currentPage - 1))}
-            className={
-              currentPage === 1
-                ? "pointer-events-none opacity-50"
-                : "hover:bg-blue-100"
-            }
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </PaginationPrevious>
-          {[...Array(totalPages)].map((_, index) => (
-            <PaginationItem key={index}>
-              <PaginationLink
-                onClick={() => onPageChange(index + 1)}
-                isActive={currentPage === index + 1}
-                className={
-                  currentPage === index + 1
-                    ? "bg-blue-600 text-white hover:bg-blue-700"
-                    : "hover:bg-blue-100"
-                }
-              >
-                {index + 1}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationNext
-            onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-            className={
-              currentPage === totalPages
-                ? "pointer-events-none opacity-50"
-                : "hover:bg-blue-100"
-            }
-          >
-            <ArrowRight className="h-4 w-4" />
-          </PaginationNext>
-        </PaginationContent>
-      </Pagination>
     </div>
   );
 };

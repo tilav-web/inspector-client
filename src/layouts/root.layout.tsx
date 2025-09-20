@@ -1,35 +1,11 @@
 import Header from "@/components/common/header/header";
 import Sidebar from "@/components/common/sidebar/sidebar";
 import ReloadSystem from "@/lib/reload-system";
-import { useInspectorStore } from "@/stores/inspector.store";
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 export default function RootLayout() {
-  const { inspector } = useInspectorStore();
-  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    if (!inspector?.auth.role) navigate("/auth");
-    switch (inspector?.auth.role) {
-      case "state":
-        navigate("/");
-        break;
-      case "region":
-        navigate("/region");
-        break;
-      case "district":
-        navigate("/district");
-        break;
-      case "neighborhood":
-        navigate("/neighborhood");
-        break;
-      default:
-        navigate("/auth");
-        break;
-    }
-  }, [inspector?.auth.role, navigate]);
 
   return (
     <div className="flex min-h-screen bg-background">

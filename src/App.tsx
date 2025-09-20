@@ -20,6 +20,7 @@ import StatePage from "./pages/state/state.page";
 import RegionPage from "./pages/region/region.page";
 import CallsPage from "./pages/calls/calls";
 import Settings from "./pages/settings/settings";
+import ActionsInspector from "./pages/inspectors/actions-inspector";
 
 const router = createBrowserRouter([
   {
@@ -135,6 +136,22 @@ const router = createBrowserRouter([
         element: (
           <SubLayout roles={["state", "region", "district"]}>
             <Inspectors />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/inspectors/actions/*",
+        element: (
+          <SubLayout roles={["state", "region", "district"]}>
+            <ActionsInspector />
+          </SubLayout>
+        ),
+      },
+      {
+        path: "/inspectors/actions/:id",
+        element: (
+          <SubLayout roles={["state", "region", "district"]}>
+            <ActionsInspector />
           </SubLayout>
         ),
       },

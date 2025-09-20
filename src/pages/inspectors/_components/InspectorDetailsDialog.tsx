@@ -17,7 +17,59 @@ import {
   Briefcase,
 } from "lucide-react";
 import { DetailItem } from "./DetailItem";
-import type { IInspector } from "@/interfaces/inspector.interface";
+
+// Interfeysni aniqlash
+interface IInspector {
+  _id: string;
+  auth: {
+    _id: string;
+    username: string;
+    role: string;
+  };
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  birthday: string;
+  rank: string;
+  address: {
+    region: {
+      _id: string;
+      name: string;
+    };
+    district: {
+      _id: string;
+      region: string;
+      name: string;
+    };
+    neighborhood: {
+      _id: string;
+      region: string;
+      district: string;
+      name: string;
+    };
+    detail: string;
+  };
+  pinfl: number;
+  passport_number: number;
+  passport_series: string;
+  gender: string;
+  phone: string;
+  nationality: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  workplaces: Array<{
+    _id: string;
+    inspector: string;
+    position: string;
+    region: string;
+    district: string;
+    neighborhood: string;
+    note: string;
+    status: boolean;
+    __v: number;
+  }>;
+}
 
 interface InspectorDetailsDialogProps {
   isOpen: boolean;
@@ -35,29 +87,17 @@ export const InspectorDetailsDialog = ({
       <DialogContent className="sm:max-w-[800px] md:max-w-[900px] lg:max-w-[1000px] bg-gradient-to-b from-blue-50 to-white border-blue-200">
         <DialogHeader className="border-b border-blue-100 pb-4">
           <div className="flex items-start gap-4">
-            {inspector && (
-              <div className="w-28 h-32 overflow-hidden border-4 border-blue-200">
-                <img
-                  src={inspector.photo}
-                  alt={`${inspector.first_name} ${inspector.last_name}`}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement;
-                    if (parent) {
-                      parent.innerHTML = '<div class="w-full h-full bg-blue-100 flex items-center justify-center"><svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg></div>';
-                    }
-                  }}
-                />
-              </div>
-            )}
+            <div className="w-28 h-32 overflow-hidden border-4 border-blue-200 bg-blue-100 flex items-center justify-center">
+              <User className="w-8 h-8 text-blue-600" />
+            </div>
             <div>
               <DialogTitle className="text-xl font-semibold text-blue-900">
                 Inspektor ma'lumotlari
               </DialogTitle>
               <DialogDescription className="text-blue-700">
-                {inspector ? `${inspector.first_name} ${inspector.last_name} ${inspector.middle_name}` : 'Tanlangan inspektorning to\'liq ma\'lumotlari.'}
+                {inspector
+                  ? `${inspector.first_name} ${inspector.last_name} ${inspector.middle_name}`
+                  : "Tanlangan inspektorning to'liq ma'lumotlari."}
               </DialogDescription>
             </div>
           </div>
@@ -107,7 +147,12 @@ export const InspectorDetailsDialog = ({
                 <DetailItem
                   icon={<MapPin className="h-4 w-4" />}
                   label="Hudud"
-                  value={`${inspector.region}, ${inspector.district}, ${inspector.neighborhood}`}
+                  value={`${inspector.address.region.name}, ${inspector.address.district.name}, ${inspector.address.neighborhood.name}`}
+                />
+                <DetailItem
+                  icon={<MapPin className="h-4 w-4" />}
+                  label="Manzil"
+                  value={inspector.address.detail || ""}
                 />
               </div>
             </div>
@@ -126,7 +171,7 @@ export const InspectorDetailsDialog = ({
                 <DetailItem
                   icon={<Hash className="h-4 w-4" />}
                   label="PINFL"
-                  value={inspector.pinfl || ""}
+                  value={inspector.pinfl.toString() || ""}
                 />
               </div>
             </div>
@@ -142,9 +187,9 @@ export const InspectorDetailsDialog = ({
                   label="Unvon"
                   value={inspector.rank || ""}
                 />
-                {inspector.workplace?.map((wp, index) => (
+                {inspector.workplaces?.map((wp, index) => (
                   <DetailItem
-                    key={wp.id || index}
+                    key={wp._id || index}
                     icon={<Briefcase className="h-4 w-4" />}
                     label={`Ish joyi ${index + 1}`}
                     value={`${wp.position} (${

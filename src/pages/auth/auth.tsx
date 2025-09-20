@@ -31,7 +31,23 @@ export default function Auth() {
       const data = await inspectorService.login({ username, password });
       setInspector(data.inspector);
       handleStorage({ key: "access_token", value: data.access_token });
-      navigate("/");
+      switch (data.inspector?.auth.role) {
+        case "state":
+          navigate("/");
+          break;
+        case "region":
+          navigate("/region");
+          break;
+        case "district":
+          navigate("/district");
+          break;
+        case "neighborhood":
+          navigate("/neighborhood");
+          break;
+        default:
+          navigate("/auth");
+          break;
+      }
     } catch (error) {
       if (error instanceof AxiosError)
         return toast.error(error.response?.data.error, {

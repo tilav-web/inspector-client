@@ -19,7 +19,6 @@ const createRandomTask = (
   const endTime = `${String(endHour).padStart(2, "0")}:${String(
     endMinute
   ).padStart(2, "0")}`;
-  console.log(date);
 
   const categories: TaskCategory[] = [
     "BRIEFING",
