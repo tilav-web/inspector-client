@@ -1,5 +1,5 @@
 export interface ICitizen {
-  id: string;
+  _id: string;
   first_name: string;
   last_name: string;
   middle_name: string;
@@ -24,7 +24,7 @@ export interface ICitizen {
 }
 
 export interface IHousehold {
-  id: string;
+  _id: string;
   region: string;
   district: string;
   neighborhood: string;

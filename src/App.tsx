@@ -165,7 +165,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: (
+          <SubLayout roles={["state", "region", "district", "neighborhood"]}>
+            <Profile />
+          </SubLayout>
+        ),
       },
       {
         path: "/unauthorized",

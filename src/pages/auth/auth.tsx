@@ -11,10 +11,8 @@ import { Label } from "@/components/ui/label";
 import { inspectorService } from "@/services/inspector.service";
 import { useInspectorStore } from "@/stores/inspector.store";
 import { handleStorage } from "@/utils/handle-storage";
-import { AxiosError } from "axios";
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
 
 export default function Auth() {
   const [username, setUsername] = useState("");
@@ -49,11 +47,7 @@ export default function Auth() {
           break;
       }
     } catch (error) {
-      if (error instanceof AxiosError)
-        return toast.error(error.response?.data.error, {
-          description: error.response?.data.message,
-        });
-      toast.error("Xatolik", { description: "Nomalum xatolik" });
+      console.error(error);
     } finally {
       handleInspectorLoading(false);
     }

@@ -2,8 +2,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Filter, User, Plus } from "lucide-react";
 import { InspectorsTable } from "./_components/InspectorsTable";
+import { useNavigate } from "react-router-dom";
 
 export default function Inspectors() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen p-4 md:p-6">
       <div className="space-y-6 mx-auto">
@@ -18,6 +20,7 @@ export default function Inspectors() {
               </CardTitle>
               <div className="flex items-center gap-2">
                 <Button
+                  onClick={() => navigate("/inspectors/actions")}
                   variant="outline"
                   className="flex items-center gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white backdrop-blur-sm"
                 >

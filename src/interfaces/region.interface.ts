@@ -1,7 +1,4 @@
-import type { IInspector } from "./inspector.interface";
-
 export interface IRegion {
-  id: string;
+  _id: string;
   name: string;
-  inspector: IInspector | null;
 }
