@@ -57,6 +57,18 @@ class InspectorService {
       throw error;
     }
   }
+
+  async findById(id: string) {
+    try {
+      const res = await apiInstance.get(
+        `${API_ENDPOINT.INSPECTOR.findById}/${id}`
+      );
+      return res.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
 }
 
 export const inspectorService = new InspectorService();

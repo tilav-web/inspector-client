@@ -3,5 +3,6 @@ export const API_ENDPOINT = {
     base: "/inspectors",
     login: "/inspectors/login",
     me: "/inspectors/me",
+    findById: "/inspectors/by",
   },
 };
