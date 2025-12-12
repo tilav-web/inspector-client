@@ -1,7 +1,7 @@
 import type { IInspector } from "./inspector.interface";
 
 export interface ICalls {
-  _id: string;
+  id: string;
   incident: string;
   type: string;
   location: {

@@ -9,7 +9,6 @@ import type {
 
 const createRandomTask = (
   inspector: (typeof MOCK_INSPECTORS)[0],
-  date: string,
   startHour: number,
   durationMinutes: number
 ): ITimetableTask => {
@@ -72,20 +71,20 @@ const createDailyTimetable = (
   const tasks: ITimetableTask[] = [];
 
   if (shiftType === "MORNING") {
-    tasks.push(createRandomTask(inspector, date, 8, 30)); // 08:00-08:30
-    tasks.push(createRandomTask(inspector, date, 8, 90)); // 08:30-10:00
-    tasks.push(createRandomTask(inspector, date, 10, 60)); // 10:00-11:00
-    tasks.push(createRandomTask(inspector, date, 11, 60)); // 11:00-12:00
-    tasks.push(createRandomTask(inspector, date, 12, 60)); // 12:00-13:00
-    tasks.push(createRandomTask(inspector, date, 13, 60)); // 13:00-14:00
-    tasks.push(createRandomTask(inspector, date, 14, 60)); // 14:00-15:00
+    tasks.push(createRandomTask(inspector, 8, 30)); // 08:00-08:30
+    tasks.push(createRandomTask(inspector, 8, 90)); // 08:30-10:00
+    tasks.push(createRandomTask(inspector, 10, 60)); // 10:00-11:00
+    tasks.push(createRandomTask(inspector, 11, 60)); // 11:00-12:00
+    tasks.push(createRandomTask(inspector, 12, 60)); // 12:00-13:00
+    tasks.push(createRandomTask(inspector, 13, 60)); // 13:00-14:00
+    tasks.push(createRandomTask(inspector, 14, 60)); // 14:00-15:00
   } else if (shiftType === "AFTERNOON") {
-    tasks.push(createRandomTask(inspector, date, 15, 60)); // 15:00-16:00
-    tasks.push(createRandomTask(inspector, date, 16, 60)); // 16:00-17:00
-    tasks.push(createRandomTask(inspector, date, 17, 90)); // 17:00-18:30
-    tasks.push(createRandomTask(inspector, date, 18, 30)); // 18:30-19:00
-    tasks.push(createRandomTask(inspector, date, 19, 60)); // 19:00-20:00
-    tasks.push(createRandomTask(inspector, date, 20, 120)); // 20:00-22:00
+    tasks.push(createRandomTask(inspector, 15, 60)); // 15:00-16:00
+    tasks.push(createRandomTask(inspector, 16, 60)); // 16:00-17:00
+    tasks.push(createRandomTask(inspector, 17, 90)); // 17:00-18:30
+    tasks.push(createRandomTask(inspector, 18, 30)); // 18:30-19:00
+    tasks.push(createRandomTask(inspector, 19, 60)); // 19:00-20:00
+    tasks.push(createRandomTask(inspector, 20, 120)); // 20:00-22:00
   }
 
   return {

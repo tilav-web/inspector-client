@@ -1,5 +1,8 @@
 import type { IInspector } from "../interfaces/inspector.interface";
 import type { ICitizen, IHousehold } from "../interfaces/citizen.interface";
+import type { IRegion } from "../interfaces/region.interface";
+import type { IDistrict } from "../interfaces/district.interface";
+import type { INeighborhood } from "../interfaces/neighborhood.interface";
 
 const authId1 = "a1b2c3d4-e5f6-7890-1234-567890abcdef";
 const authId2 = "b2c3d4e5-f6a7-8901-2345-67890abcdef0";
@@ -79,8 +82,35 @@ const getRandomDate = (startYear: number, endYear: number) => {
   return `${year}-${month}-${day}`;
 };
 
+// Helper function to create mock IRegion
+const createMockRegion = (name: string): IRegion => ({
+  id: generateUuid(),
+  name: name,
+  inspector: null, // For mock, inspector can be null
+});
+
+// Helper function to create mock IDistrict
+const createMockDistrict = (name: string, regionName: string): IDistrict => ({
+  id: generateUuid(),
+  name: name,
+  region: regionName, // The district interface expects region as a string
+});
+
+// Helper function to create mock INeighborhood
+const createMockNeighborhood = (
+  name: string,
+  regionName: string,
+  districtName: string
+): INeighborhood => ({
+  id: generateUuid(),
+  name: name,
+  region: regionName, // Corrected: The neighborhood interface expects region as a string
+  district: createMockDistrict(districtName, regionName), // Nested mock district
+});
+
 export const MOCK_INSPECTORS: IInspector[] = [
   {
+    _id: generateUuid(),
     id: "ins1pector-1a2b-3c4d-5e6f-7g8h9i0j1k2",
     auth: {
       id: authId1,
@@ -95,25 +125,41 @@ export const MOCK_INSPECTORS: IInspector[] = [
     region: "Toshkent shahri",
     district: "yunusobod",
     neighborhood: "moyqorghon",
+    address: {
+      region: createMockRegion("Toshkent shahri"),
+      district: createMockDistrict("yunusobod", "Toshkent shahri"),
+      neighborhood: createMockNeighborhood(
+        "moyqorghon",
+        "Toshkent shahri",
+        "yunusobod"
+      ),
+      detail: "Toshkent shahri, Yunusobod tumani, Moyqorghon mahallasi",
+    },
     pinfl: 12345678901234,
     passport_number: 1234567,
     passport_series: "AB",
     gender: "male",
     phone: "+998901234567",
     nationality: "O'zbek",
-    workplace: [
+    workplaces: [
       {
         id: "wp-1-1",
+        _id: generateUuid(),
         position: "Bosh inspektor",
-        region: "Toshkent shahri",
-        district: "yunusobod",
-        neighborhood: "moyqorghon",
+        region: createMockRegion("Toshkent shahri"),
+        district: createMockDistrict("yunusobod", "Toshkent shahri"),
+        neighborhood: createMockNeighborhood(
+          "moyqorghon",
+          "Toshkent shahri",
+          "yunusobod"
+        ),
         status: true,
       },
     ],
     photo: "https://i.pravatar.cc/300?u=state_admin",
   },
   {
+    _id: generateUuid(),
     id: "ins2pector-2b3c-4d5e-6f7g-8h9i0j1k2l3",
     auth: {
       id: authId2,
@@ -128,25 +174,41 @@ export const MOCK_INSPECTORS: IInspector[] = [
     region: "Toshkent viloyati",
     district: "olmaliq",
     neighborhood: "oltin_tepa",
+    address: {
+      region: createMockRegion("Toshkent viloyati"),
+      district: createMockDistrict("olmaliq", "Toshkent viloyati"),
+      neighborhood: createMockNeighborhood(
+        "oltin_tepa",
+        "Toshkent viloyati",
+        "olmaliq"
+      ),
+      detail: "Toshkent viloyati, Olmaliq tumani, Oltin tepa mahallasi",
+    },
     pinfl: 23456789012345,
     passport_number: 2345678,
     passport_series: "AC",
     gender: "male",
     phone: "+998912345678",
     nationality: "O'zbek",
-    workplace: [
+    workplaces: [
       {
         id: "wp-2-1",
+        _id: generateUuid(),
         position: "Katta inspektor",
-        region: "Toshkent viloyati",
-        district: "olmaliq",
-        neighborhood: "oltin_tepa",
+        region: createMockRegion("Toshkent viloyati"),
+        district: createMockDistrict("olmaliq", "Toshkent viloyati"),
+        neighborhood: createMockNeighborhood(
+          "oltin_tepa",
+          "Toshkent viloyati",
+          "olmaliq"
+        ),
         status: true,
       },
     ],
     photo: "https://i.pravatar.cc/300?u=region_inspector_1",
   },
   {
+    _id: generateUuid(),
     id: "ins3pector-3c4d-5e6f-7g8h-9i0j1k2l3m4",
     auth: {
       id: authId3,
@@ -161,25 +223,41 @@ export const MOCK_INSPECTORS: IInspector[] = [
     region: "Farg'ona viloyati",
     district: "margilon",
     neighborhood: "yangi_hayot",
+    address: {
+      region: createMockRegion("Farg'ona viloyati"),
+      district: createMockDistrict("margilon", "Farg'ona viloyati"),
+      neighborhood: createMockNeighborhood(
+        "yangi_hayot",
+        "Farg'ona viloyati",
+        "margilon"
+      ),
+      detail: "Farg'ona viloyati, Marg'ilon shahri, Yangi hayot mahallasi",
+    },
     pinfl: 34567890123456,
     passport_number: 3456789,
     passport_series: "AD",
     gender: "male",
     phone: "+998934567890",
     nationality: "O'zbek",
-    workplace: [
+    workplaces: [
       {
         id: "wp-3-1",
+        _id: generateUuid(),
         position: "Inspektor",
-        region: "Farg'ona viloyati",
-        district: "margilon",
-        neighborhood: "yangi_hayot",
+        region: createMockRegion("Farg'ona viloyati"),
+        district: createMockDistrict("margilon", "Farg'ona viloyati"),
+        neighborhood: createMockNeighborhood(
+          "yangi_hayot",
+          "Farg'ona viloyati",
+          "margilon"
+        ),
         status: true,
       },
     ],
     photo: "https://i.pravatar.cc/300?u=district_inspector_1",
   },
   {
+    _id: generateUuid(),
     id: "ins4pector-4d5e-6f7g-8h9i-0j1k2l3m4n5",
     auth: {
       id: authId4,
@@ -194,19 +272,34 @@ export const MOCK_INSPECTORS: IInspector[] = [
     region: "Andijon viloyati",
     district: "andijon_sh",
     neighborhood: "soglom_avlod",
+    address: {
+      region: createMockRegion("Andijon viloyati"),
+      district: createMockDistrict("andijon_sh", "Andijon viloyati"),
+      neighborhood: createMockNeighborhood(
+        "soglom_avlod",
+        "Andijon viloyati",
+        "andijon_sh"
+      ),
+      detail: "Andijon viloyati, Andijon shahri, Sog'lom avlod mahallasi",
+    },
     pinfl: 45678901234567,
     passport_number: 4567890,
     passport_series: "AE",
     gender: "female",
     phone: "+998945678901",
     nationality: "O'zbek",
-    workplace: [
+    workplaces: [
       {
         id: "wp-4-1",
+        _id: generateUuid(),
         position: "MFY Inspektori",
-        region: "Andijon viloyati",
-        district: "andijon_sh",
-        neighborhood: "soglom_avlod",
+        region: createMockRegion("Andijon viloyati"),
+        district: createMockDistrict("andijon_sh", "Andijon viloyati"),
+        neighborhood: createMockNeighborhood(
+          "soglom_avlod",
+          "Andijon viloyati",
+          "andijon_sh"
+        ),
         status: true,
       },
     ],
@@ -249,6 +342,7 @@ for (let i = 5; i <= 34; i++) {
   const randomRegionName = randomRegion.name; // Get its name
 
   MOCK_INSPECTORS.push({
+    _id: generateUuid(),
     id: `ins${i}pector-${inspectorId.substring(0, 10)}`,
     auth: {
       id: authId,
@@ -263,19 +357,34 @@ for (let i = 5; i <= 34; i++) {
     region: randomRegionName, // Use the random region name
     district: "chilonzor", // Example district
     neighborhood: `neighborhood_${i}`, // Unique neighborhood
+    address: {
+      region: createMockRegion(randomRegionName),
+      district: createMockDistrict("chilonzor", randomRegionName),
+      neighborhood: createMockNeighborhood(
+        `neighborhood_${i}`,
+        randomRegionName,
+        "chilonzor"
+      ),
+      detail: `${randomRegionName}, Chilonzor tumani, neighborhood_${i} mahallasi`,
+    },
     pinfl: 10000000000000 + i,
     passport_number: 1000000 + i,
     passport_series: `AZ${String.fromCharCode(65 + (i % 26))}`,
     gender: gender,
     phone: `+9989${Math.floor(Math.random() * 90000000 + 10000000)}`,
     nationality: "O'zbek",
-    workplace: [
+    workplaces: [
       {
         id: `wp-${i}-1`,
+        _id: generateUuid(),
         position: "MFY Inspektori",
-        region: randomRegionName, // Use the random region name
-        district: "chilonzor",
-        neighborhood: `neighborhood_${i}`,
+        region: createMockRegion(randomRegionName), // Use the random region name
+        district: createMockDistrict("chilonzor", randomRegionName),
+        neighborhood: createMockNeighborhood(
+          `neighborhood_${i}`,
+          randomRegionName,
+          "chilonzor"
+        ),
         status: true,
       },
     ],

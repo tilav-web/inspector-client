@@ -1,5 +1,5 @@
 export interface IDistrict {
-  _id: string;
+  id: string;
   name: string;
   region: string;
 }
